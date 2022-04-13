@@ -1,5 +1,5 @@
 import React from 'react'
-import axios from 'axios'
+import personsService from '../services/persons'
 
 const Form = ({handleNameChange,handleNumberChange,newName,newNumber,persons,setPersons}) => {
 
@@ -8,7 +8,6 @@ const Form = ({handleNameChange,handleNumberChange,newName,newNumber,persons,set
 
     const addName = (event) => {
       event.preventDefault()
-      console.log('button clicked', event.target)
       
       const exist = (element) => element.name===newName;
       
@@ -17,11 +16,13 @@ const Form = ({handleNameChange,handleNumberChange,newName,newNumber,persons,set
           name:newName,
           number:newNumber
         }
-        axios
-        .post('http://localhost:3001/persons', nameObject)
-        .then(response => {
-          setPersons(persons.concat(response.data))
-        })
+
+        personsService
+      .create(nameObject)
+      .then(response => {
+        setPersons(persons.concat(response.data))
+      })
+        
         
       }else{
         window.alert(`${newName} is already added to phonebook`);

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
+import personsService from './services/persons'
 
-import axios from 'axios'
 
 import Form from './components/Form'
 import Persons from './components/Persons'
@@ -19,12 +19,11 @@ const App = () => {
 
 
   const hook=() => {
-    console.log('effect')
-   axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        setPersons(response.data)
-      })
+    personsService
+    .getAll()
+    .then(response => {
+      setPersons(response.data)
+        })   
   }
   useEffect(hook, [])
 

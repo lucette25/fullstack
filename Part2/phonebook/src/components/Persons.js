@@ -16,7 +16,7 @@ const Person = ({ person }) => {
     return (
       <ul>
           {namesToShow.map(person =>
-            <Person key={person.name} person={person} />
+            <Person key={person.id} person={person} />
           )}
       </ul>
       
