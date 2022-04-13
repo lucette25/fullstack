@@ -1,5 +1,5 @@
 import React from 'react'
-
+import axios from 'axios'
 
 const Form = ({handleNameChange,handleNumberChange,newName,newNumber,persons,setPersons}) => {
 
@@ -10,14 +10,18 @@ const Form = ({handleNameChange,handleNumberChange,newName,newNumber,persons,set
       event.preventDefault()
       console.log('button clicked', event.target)
       
-      const isLargeNumber = (element) => element.name===newName;
-      console.log("if",persons.findIndex(isLargeNumber),newName)
-      if(persons.findIndex(isLargeNumber)===-1){
+      const exist = (element) => element.name===newName;
+      
+      if(persons.findIndex(exist)===-1){
         const nameObject = {
           name:newName,
           number:newNumber
         }
-        setPersons(persons.concat(nameObject))
+        axios
+        .post('http://localhost:3001/persons', nameObject)
+        .then(response => {
+          setPersons(persons.concat(response.data))
+        })
         
       }else{
         window.alert(`${newName} is already added to phonebook`);
