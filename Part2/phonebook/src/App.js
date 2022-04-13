@@ -51,7 +51,7 @@ const App = () => {
      <Form  handleNameChange={handleNameChange} handleNumberChange={handleNumberChange} newName={newName} newNumber={newNumber} persons={persons} setPersons={setPersons}/>
 
       <h2>Numbers</h2>
-      <Persons persons={persons} showFilter={showFilter}/>
+      <Persons persons={persons} setPersons={setPersons} showFilter={showFilter}/>
     </div>
   )
 }
