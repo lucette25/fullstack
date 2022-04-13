@@ -11,14 +11,14 @@ const Person = ({ person,setPersons,persons }) => {
   
   const handleClick= (person,setPersons,persons) => {
     
-    if (window.confirm(`Do you really want to delete ${person.name}`)) {
+    if (window.confirm(`Do you really want to delete ${person.name} ?`)) {
       personsService
       .deletePerson(person.id)
       .then(response => {
             personsService
         .getAll()
-        .then(response => {
-          setPersons(response.data)
+        .then(updatePersons => {
+          setPersons(updatePersons)
             }) 
 
       })

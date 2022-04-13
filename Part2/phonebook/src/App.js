@@ -21,8 +21,8 @@ const App = () => {
   const hook=() => {
     personsService
     .getAll()
-    .then(response => {
-      setPersons(response.data)
+    .then(initialData => {
+      setPersons(initialData)
         })   
   }
   useEffect(hook, [])
