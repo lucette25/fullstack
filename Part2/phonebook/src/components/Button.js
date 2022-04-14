@@ -1,5 +1,5 @@
 const Button = ({ handleClick,text }) => (
-    <button onClick={handleClick}>
+    <button onClick={handleClick} className='button'>
       {text}
     </button>
   )

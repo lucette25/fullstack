@@ -1,7 +1,7 @@
 import React from 'react'
 import personsService from '../services/persons'
 
-const Form = ({handleNameChange,handleNumberChange,newName,newNumber,persons,setPersons}) => {
+const Form = ({handleNameChange,handleNumberChange,newName,newNumber,persons,setPersons,setErrorMessage, setClassName}) => {
 
 
 
@@ -17,6 +17,14 @@ const Form = ({handleNameChange,handleNumberChange,newName,newNumber,persons,set
         .then(returnedNote => {
           setPersons(persons.map(p => p.id !== person.id ? p : returnedNote))
         })
+
+
+        //Setting sucess nottification attribut
+        setErrorMessage(` ${newName} number is updated` )
+        setClassName('sucess')
+        setTimeout(() => {
+          setErrorMessage('')
+        }, 3000)
 
       }
     }
@@ -36,6 +44,12 @@ const Form = ({handleNameChange,handleNumberChange,newName,newNumber,persons,set
         setPersons(persons.concat(returnedPerson))
       })
 
+      //Setting sucess nottification attribut
+      setErrorMessage(` ${newName} is added` )
+      setClassName('sucess')
+      setTimeout(() => {
+        setErrorMessage('')
+      }, 3000)
     }
     
 

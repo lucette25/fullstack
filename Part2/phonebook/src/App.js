@@ -5,6 +5,7 @@ import personsService from './services/persons'
 import Form from './components/Form'
 import Persons from './components/Persons'
 import Filter from './components/Filter'
+import Notification from './components/Notification'
 
 
 
@@ -16,6 +17,8 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [showFilter, setShowFilter] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
+  const [className, setClassName] = useState('')
 
 
   const hook=() => {
@@ -30,6 +33,7 @@ const App = () => {
 
   const handleNameChange = (event) => {
     setNewName(event.target.value)
+    
   }
 
   const handleNumberChange = (event) => {
@@ -44,14 +48,18 @@ const App = () => {
   
   return (
     <div>
-      <h2>Phonebook</h2>
+      <h1>Phonebook</h1>
+      <Notification message={errorMessage} className={className}  />
       <Filter handleFilterChange={handleFilterChange}/>
 
       <h2>Add a new </h2>
-     <Form  handleNameChange={handleNameChange} handleNumberChange={handleNumberChange} newName={newName} newNumber={newNumber} persons={persons} setPersons={setPersons}/>
+     <Form  handleNameChange={handleNameChange} handleNumberChange={handleNumberChange} newName={newName} 
+     newNumber={newNumber} persons={persons} setPersons={setPersons} setErrorMessage={setErrorMessage}
+     setClassName={setClassName}/>
 
       <h2>Numbers</h2>
-      <Persons persons={persons} setPersons={setPersons} showFilter={showFilter}/>
+      <Persons persons={persons} setPersons={setPersons} showFilter={showFilter} setErrorMessage={setErrorMessage}
+     setClassName={setClassName}/>
     </div>
   )
 }
