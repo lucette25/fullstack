@@ -4,14 +4,18 @@ import personsService from '../services/persons'
 
 const Person = ({ person,setPersons,persons,setErrorMessage,setClassName }) => {
     return (
+      <tr>
+      <td>{person.name} {person.number} </td>
+      <td> <Button handleClick={()=>handleClick(person,setPersons,persons,setErrorMessage,setClassName)} text={"Delete"}/></td>
+    </tr>
       
-      <li>{person.name} {person.number}<Button  handleClick={()=>handleClick(person,setPersons,persons,setErrorMessage,setClassName)} text={"Delete"}/></li>
     )
   }
   
   const handleClick= (person,setPersons,persons,setErrorMessage,setClassName) => {
     
     if (window.confirm(`Do you really want to delete ${person.name} ?`)) {
+      const personName=person.name
       personsService
       .deletePerson(person.id)
       .then(response => {
@@ -19,7 +23,14 @@ const Person = ({ person,setPersons,persons,setErrorMessage,setClassName }) => {
         .getAll()
         .then(updatePersons => {
           setPersons(updatePersons)
-            }) 
+            }).catch(error => {
+              //Setting error nottification attribut
+                setErrorMessage(` Information of ${personName} has already been remove` )
+                setClassName('error')
+                setTimeout(() => {
+                  setErrorMessage('')
+                }, 3000)
+            })
 
       })
 
@@ -39,12 +50,14 @@ const Person = ({ person,setPersons,persons,setErrorMessage,setClassName }) => {
     : persons.filter(person=>person.name.toLowerCase().includes(showFilter.toLowerCase()))
   
     return (
-      <ul>
+      <table>
+      <tbody>
           {namesToShow.map(person =>
             <Person key={person.id} person={person} persons={persons} setPersons={setPersons} setErrorMessage={setErrorMessage}
             setClassName={setClassName} />
           )}
-      </ul>
+      </tbody>
+      </table>
       
     )
   }

@@ -14,8 +14,15 @@ const Form = ({handleNameChange,handleNumberChange,newName,newNumber,persons,set
 
               personsService
         .update(person.id, changedPerson)
-        .then(returnedNote => {
-          setPersons(persons.map(p => p.id !== person.id ? p : returnedNote))
+        .then(returnedPerson => {
+          setPersons(persons.map(p => p.id !== person.id ? p : returnedPerson))
+        }).catch(error => {
+          //Setting error nottification attribut
+            setErrorMessage(` Information of ${newName} has already been remove` )
+            setClassName('error')
+            setTimeout(() => {
+              setErrorMessage('')
+            }, 3000)
         })
 
 
@@ -84,7 +91,7 @@ const Form = ({handleNameChange,handleNumberChange,newName,newNumber,persons,set
             <div>number: <input onChange={handleNumberChange}/></div>
           </div>
           <div>
-            <button type="submit">add</button>
+            <button className='buttonAdd' type="submit">Add</button>
           </div>
         </form>
     )

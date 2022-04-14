@@ -3,7 +3,7 @@ h1 {
     font-style: italic;
   }
 
-  li {
+  tr {
     color: maroon;
     padding-left: 3px;
     font-size: 15px;
@@ -39,5 +39,18 @@ h1 {
     display: inline-block;
     font-size: 16px;
     border-radius: 3px;
+    padding-left: 13px;
+  }
+
+  .buttonAdd {
+    background-color: #3319dc; /* Green */
+    border: none;
+    color: white;
+    padding: 5px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    border-radius: 5px;
     padding-left: 13px;
   }
