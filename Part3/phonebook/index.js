@@ -32,13 +32,25 @@ app.get('/api/persons', (request, response) => {
   app.get('/persons/info', (request, response) => {
     const numberPersons=persons.length
     const date=new Date()
-    const info=`Phonebook has info for ${numberPersons} people  \n ${date}`
-    console.log(info)
+
+    const info=`<p>Phonebook has info for ${numberPersons} people</p>
+                    <p> ${date}</p>`
+
     response.send(info)
   })
 
-  
-  
+  app.get('/api/persons/:id', (request, response) => {
+    const id = Number(request.params.id)
+    const person= persons.find(note => note.id === id)
+    
+    if (person) {
+      response.json(person)
+    } else {
+        response.status(404)
+        response.send(`Id ${id} does not exist`);
+    }
+  })
+  //npm run dev
 const PORT = 3001
 app.listen(PORT)
 console.log(`Server running on port ${PORT}`)
