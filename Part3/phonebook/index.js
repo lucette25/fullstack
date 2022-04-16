@@ -1,7 +1,19 @@
 const express = require('express')
-const app = express()
+const morgan = require('morgan')
 
+const app = express()
 app.use(express.json())
+
+morgan.token('postData', (request) => {
+  if (request.method === 'POST') return  JSON.stringify(request.body);
+});
+app.use(
+  morgan(
+    ':method :url :status :res[content-length] - :response-time ms :postData'
+  )
+);
+
+
 
 let persons=[
     { 
@@ -33,25 +45,26 @@ app.get('/api/persons', (request, response) => {
   app.get('/persons/info', (request, response) => {
     const numberPersons=persons.length
     const date=new Date()
-
     const info=`<p>Phonebook has info for ${numberPersons} people</p>
                     <p> ${date}</p>`
-
+    
     response.send(info)
   })
 
   app.get('/api/persons/:id', (request, response) => {
     const id = Number(request.params.id)
     const person= persons.find(note => note.id === id)
-    
     if (person) {
       response.json(person)
+
+      
+
     } else {
         response.status(404)
         response.send(`Id ${id} does not exist`);
     }
   })
-
+   
 
   app.delete('/api/persons/:id', (request, response) => {
     const id = Number(request.params.id)
@@ -95,11 +108,25 @@ app.post('/api/persons', (request, response) => {
         name: body.name, 
         number: body.number
     }
+
+    
   
     persons = persons.concat(person)
     response.json(person)
   })
+
+
+   
+
   //npm run dev
 const PORT = 3001
 app.listen(PORT)
 console.log(`Server running on port ${PORT}`)
+
+
+
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: 'unknown endpoint' })
+}
+
+app.use(unknownEndpoint)
