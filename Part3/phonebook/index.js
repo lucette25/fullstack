@@ -50,6 +50,13 @@ app.get('/api/persons', (request, response) => {
         response.send(`Id ${id} does not exist`);
     }
   })
+
+
+  app.delete('/api/persons/:id', (request, response) => {
+    const id = Number(request.params.id)
+    persons = persons.filter(person => person.id !== id)
+    response.status(204).end()
+  })
   //npm run dev
 const PORT = 3001
 app.listen(PORT)
